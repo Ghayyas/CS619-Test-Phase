@@ -1,0 +1,40 @@
+<mat-toolbar>
+    <span>Registration</span>
+  </mat-toolbar>
+  <mat-card class="my-card">
+    <mat-card-content>
+        <form class="my-form" [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)" novalidate>
+           <mat-form-field class="full-width">
+                  <mat-label>Full Name</mat-label>
+                  <input  matInput type="text" formControlName="fullName"  placeholder="Full name"  name="fullName"  required>
+               </mat-form-field>
+               <mat-form-field class="full-width">
+                  <mat-label>User Name</mat-label>
+                  <input  matInput type="text" formControlName="UserName"  placeholder="User Name" name="UserName"  required>
+               </mat-form-field>
+               <mat-form-field class="full-width">
+                  <mat-label>Contact No</mat-label>
+                  <input  matInput type="tel" formControlName="contactNum"  placeholder="Contact No" name="contactNum"  required>
+               </mat-form-field>
+               <mat-form-field class="full-width">
+                  <mat-label>Email Address</mat-label>
+                  <input  matInput type="email" formControlName="email" placeholder="Email Address" name="email" required>
+                  <div *ngIf="checkoutForm.controls.email.hasError('pattern')">
+                    Oops, wrong pattern buddy!
+                  </div>
+               </mat-form-field>
+               <mat-form-field class="full-width">
+                <mat-label>Address</mat-label>
+                <input  matInput type="text" formControlName="address" placeholder="Address" name="address" required>
+             </mat-form-field>
+             <button mat-raised-button type="submit" [disabled]="checkoutForm.invalid" color="primary">REGISTER</button>
+
+        </form>
+           <!-- <div *ngFor="let i of item | async">
+               {{i}}
+           </div> -->
+
+      </mat-card-content>
+     <mat-card-actions>
+     </mat-card-actions>
+  </mat-card>
