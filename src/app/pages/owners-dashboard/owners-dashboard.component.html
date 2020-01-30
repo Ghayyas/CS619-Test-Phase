@@ -1,7 +1,7 @@
 <mat-toolbar>
     <span>Wellcome</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button color="primary">Add New Venue</button>
+    <button mat-raised-button color="primary" (click)="openDialog()">Add New Venue</button>
 
   </mat-toolbar>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -12,13 +12,13 @@
     <!-- Position Column -->
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+      <td mat-cell *matCellDef="let element=index"> {{element+1}} </td>
     </ng-container>
   
     <!-- Name Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.VenueID}} </td>
     </ng-container>
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -27,33 +27,33 @@
           </ng-container>
   
     <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
+    <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef> Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.venueType}} </td>
     </ng-container>
   
     <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
+    <ng-container matColumnDef="location">
       <th mat-header-cell *matHeaderCellDef> Location </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.location}} </td>
     </ng-container>
       <!-- Symbol Column -->
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element" (click)="editDialog(element,element.VenueID)"> 
           <mat-icon>edit</mat-icon>  
         </td>
       </ng-container>
           <!-- Symbol Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell *matCellDef="let element"> 
+      <td mat-cell *matCellDef="let element" (click)="deleteDialog(element.VenueID)"> 
         <mat-icon>delete</mat-icon>  
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   
   

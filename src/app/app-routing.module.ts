@@ -6,9 +6,9 @@ import { OwnersDashboardComponent } from "./pages/owners-dashboard/owners-dashbo
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard',pathMatch: 'full'},
+  { path: '', redirectTo: '/signup',pathMatch: 'full'},
       { path: 'signup', component: SignupComponent },
-      { path: 'dashboard', component: OwnersDashboardComponent },
+      { path: 'dashboard/:id', component: OwnersDashboardComponent },
 ];
 
 @NgModule({

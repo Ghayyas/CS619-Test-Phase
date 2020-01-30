@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Please Enter Venue Details</h1>
+<div mat-dialog-content>
+  <p>Please Enter Venue Name</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="venue.name">
+  </mat-form-field>
+</div>
+<div mat-dialog-content>
+    <p>Please Enter Venue Location</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="venue.location">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <p>Please Enter Venue Type</p>
+    <mat-form-field>
+      <input matInput [(ngModel)]="venue.venueType">
+    </mat-form-field>
+  </div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="venue" cdkFocusInitial>Ok</button>
+</div>

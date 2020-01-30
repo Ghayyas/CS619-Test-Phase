@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 //Anguar Material Toast
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 
 
@@ -25,7 +26,8 @@ export class SignupComponent  {
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private afs : AngularFirestore
+    private afs : AngularFirestore,
+    private route: Router
    ) {
 
     //RXJS Reactive Forms
@@ -59,6 +61,10 @@ export class SignupComponent  {
         this._snackBar.open("Success!",'OK', {
           duration: 4000,
         });
+        console.log('snap',snapshot.id);
+        this.route.navigate(['/dashboard/'+snapshot.id])
+      // let setLocal = localStorage.setItem('userID',snapshot.id);
+      
       })
     });
 
