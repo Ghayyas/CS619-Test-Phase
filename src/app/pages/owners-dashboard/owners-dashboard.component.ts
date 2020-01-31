@@ -6,7 +6,7 @@ import { EditVenueComponent } from '../../dialogs/edit-venue/edit-venue.componen
 
 
 //AngularFire
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';   //RXJS Observables
 
@@ -33,7 +33,7 @@ export interface VenueElement {
   name: string;
   position: number;
   location: string; 
-  id: string;
+  // id: string;
   venueType: string;
 }
 // const ELEMENT_DATA: VenueElement[] = [
@@ -56,13 +56,15 @@ export class OwnersDashboardComponent implements OnInit{
   
 
 
-  displayedColumns: string[] = ['position','id' ,'name', 'location', 'type','edit','delete'];
+  displayedColumns: string[] = ['position','name', 'location', 'type','edit','delete'];
   dataSource:Observable<any>; //= ELEMENT_DATA;  
   action: any;
   private itemDoc: AngularFirestoreDocument<VenueElement>;
   item: Observable<VenueElement>;
   userId:string;
   param:Observable<any>
+  venues:any = [];
+
   constructor(
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
@@ -92,10 +94,13 @@ export class OwnersDashboardComponent implements OnInit{
    */
   
   ngOnInit(){
-        let params = this.activeRoute.params.subscribe(param=>{
+          this.activeRoute.params.subscribe(param=>{
           this.userId = param['id'];
           let collection = this.afs.collection('venues',ref=>ref.where('ownerId','==',this.userId)).valueChanges();
           this.dataSource = collection; 
+          this.afs.doc('VenueOwner/'+this.userId).valueChanges().subscribe(((data:any)=>{
+              this.venues = data.venues;
+           }));
         });
 
   }
@@ -126,12 +131,22 @@ export class OwnersDashboardComponent implements OnInit{
          this.afs.doc('venues/'+snapshot.id).update({
           VenueID: snapshot.id
          }).then(()=>{
+        let vArray =  new Promise(resolve=>{
+            this.venues.push({venueID:snapshot.id})
+            resolve(true);
+        });
+          vArray.then((s)=>{
+            this.afs.doc('VenueOwner/'+this.userId).update({
+              venues: this.venues
+            });
+          });
+
            this._snackBar.open("Success!",'OK', {
              duration: 4000,
            });
          })
        });
-      console.log('The dialog was closed',data);
+      // console.log('The dialog was closed',data);
       // this.name = result;
     });
   }
@@ -158,7 +173,7 @@ export class OwnersDashboardComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log('data',data);
+      // console.log('data',data);
       if(!data) return;
       this.itemDoc = this.afs.doc<VenueElement>('venues/'+id);
       this.itemDoc.update(data).then((sucess)=>{
@@ -190,12 +205,19 @@ export class OwnersDashboardComponent implements OnInit{
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log('The dialog was closed',id,data);
+      // console.log('The dialog was closed',id,data);
       if(!data) return;
         this.itemDoc = this.afs.doc<VenueElement>('venues/'+id);
         // this.item = this.itemDoc.valueChanges();
         this.itemDoc.delete().then((sucess)=>{
-          console.log('succes..!',sucess);
+          // console.log('succes..!',sucess);
+          const index = this.venues.map(e => e.venueID).indexOf(id);
+                this.venues.splice(index,1);
+                // console.log(index);
+          this.afs.doc('VenueOwner/'+this.userId).update({
+            venues: this.venues
+          });
+          // console.log('venues',this.venues);  
           this._snackBar.open("Success!",'OK', {
             duration: 4000,
           });

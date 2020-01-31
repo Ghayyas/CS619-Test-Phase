@@ -16,38 +16,38 @@
     </ng-container>
   
     <!-- Name Column -->
-    <ng-container matColumnDef="id">
+    <!-- <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <td mat-cell *matCellDef="let element"> {{element.VenueID}} </td>
-    </ng-container>
+    </ng-container> -->
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
   
-    <!-- Weight Column -->
+    <!-- Type Column -->
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef> Type </th>
       <td mat-cell *matCellDef="let element"> {{element.venueType}} </td>
     </ng-container>
   
-    <!-- Symbol Column -->
+    <!-- Location Column -->
     <ng-container matColumnDef="location">
       <th mat-header-cell *matHeaderCellDef> Location </th>
       <td mat-cell *matCellDef="let element"> {{element.location}} </td>
     </ng-container>
-      <!-- Symbol Column -->
+      <!-- Edit Column -->
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Edit </th>
         <td mat-cell *matCellDef="let element" (click)="editDialog(element,element.VenueID)"> 
           <mat-icon>edit</mat-icon>  
         </td>
       </ng-container>
-          <!-- Symbol Column -->
+    <!-- delete Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell *matCellDef="let element" (click)="deleteDialog(element.VenueID)"> 
+      <td mat-cell *matCellDef="let element;" (click)="deleteDialog(element.VenueID)"> 
         <mat-icon>delete</mat-icon>  
       </td>
     </ng-container>
